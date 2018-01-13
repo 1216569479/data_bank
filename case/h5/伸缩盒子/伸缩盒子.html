@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>伸缩盒子</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    p{
+        width: 300px;
+        height: 50px;
+        line-height: 50px;
+        background: rgb(255, 0, 170);
+        text-align: center;    
+    }
+    .flex-container1 {
+        display: -webkit-flex;
+        display: flex;
+        width: 300px;
+        height: 240px;
+        background-color: Silver;
+    }
+    .flex-item1 {
+        background-color: DeepSkyBlue;
+        width: 100px;
+        height: 100px;
+    }
+    .flex-container2 {
+        display: -webkit-flex;
+        display: flex;
+        /* 1.水平方向 */
+        /* flex-direction: row; */
+        /* 2.水平方向反转 */
+        /* flex-direction: row-reverse; */
+        /* 3.竖直方向 */
+        /* flex-direction: column; */
+        /* 4.设置方向反转 */
+        flex-direction: column-reverse;
+        width: 300px;
+        height: 240px;
+        background-color: Silver;
+    }
+
+    .flex-item2 {
+        background-color: DeepSkyBlue;
+        width: 100px;
+        height: 100px;
+    }
+
+    .flex-container3 {
+        display: -webkit-flex;
+        display: flex;
+        /* 1.从主轴开始位置靠齐 */
+        /* justify-content: flex-start; */
+        /* 2.到主轴结束方向 */
+        /* justify-content: flex-end; */
+        /* 3.居中 */
+        /* justify-content: center; */
+        /* 4两端留空白对齐，中间也留空白，两端保留空间是中间的一半*/
+        /* justify-content: space-around; */
+        /* 5.两端对齐 */
+        justify-content: space-between;
+        width: 300px;
+        height: 240px;
+        background-color: Silver;
+    }
+
+    .flex-item3 {
+        background-color: DeepSkyBlue;
+        width: 100px;
+        height: 100px;
+    }
+
+    .flex-container4 {
+        display: -webkit-flex;
+        display: flex;
+        /* 1. */
+        /* align-items: flex-start; 
+        align-items: flex-end; */
+        /* align-items: center;  */
+        align-items: stretch;
+        /* 默认值stretch 会将伸缩项目从侧轴起点拉伸到侧轴终点
+        假如元素盒子不设置高，将沿侧轴方向铺满 */
+        width: 300px;
+        height: 240px;
+        background-color: Silver;
+    }
+    .flex-item4 {
+        background-color: DeepSkyBlue;
+        width: 100px;
+        height: 100px;
+    }
+
+    .flex-container5 {
+        display: -webkit-flex;
+        display: flex;
+        /* 1.默认值，不换行 ，*/
+        flex-wrap: nowrap;
+        /* 2.换行 ,换行前提必须保证元素宽度超过容器宽度
+        如果不设置换行，则元素总在一行显示，即使最终元素总宽度超过容器宽度*/
+        flex-wrap: wrap;
+        /* align-content:flex-start;  */
+        /* align-content:flex-end;  */
+        /* align-content:center;  */
+        align-content:space-around; 
+        /* align-content:space-between;  */
+        /* 默认值是stretch */
+        /* align-content:stretch;  */
+        width: 300px;
+        height: 240px;
+        background-color: Silver;
+    }
+    .flex-item5 {
+        background-color: DeepSkyBlue;
+        width: 100px;
+        height: 100px;
+    }
+
+    .flex-container6 {
+        display: -webkit-flex;
+        display: flex;
+        width: 300px;
+        height: 240px;
+        background-color: Silver;
+    }
+    .flex-container6>div{
+        height: 200px;
+    }
+    /* flex代表所占份数 */
+    .flex-item6-1 {
+        flex:1;
+        background-color: DeepSkyBlue;
+    }
+    .flex-item6-2 {
+        flex:2;
+        background: red;
+    }
+    .flex-item6-3 {
+        flex:3;
+        background: hotpink;
+    }
+    .flex-container7 {
+        display: -webkit-flex;
+        display: flex;
+        width: 300px;
+        height: 240px;
+        background-color: Silver;
+    }
+    /* order代表顺序 */
+    .flex-item7-1 {
+        flex:1;
+        order:3;
+        background-color: DeepSkyBlue;
+    }
+    .flex-item7-2 {
+        flex:2;
+        order:2;
+        background: red;
+    }
+    .flex-item7-3 {
+        flex:3;
+        background: hotpink;
+    }  
+</style>
+
+<body>
+    <p>状态1</p>
+    <div class="flex-container1">
+        <div class="flex-item1">flex item 1</div>
+        <div class="flex-item1">flex item 2</div>
+    </div>
+    <p>设置主轴方向flex-direction</p>
+    <div class="flex-container2">
+        <div class="flex-item2">flex item 1</div>
+        <div class="flex-item2">flex item 2</div>
+    </div>
+    <p>元素沿主轴对齐方式justify-content</p>
+    <div class="flex-container3">
+        <div class="flex-item3">flex item 1</div>
+        <div class="flex-item3">flex item 2</div>
+    </div>
+    <p>设置元素在侧轴方向对齐方式align-items</p>
+    <div class="flex-container4">
+        <div class="flex-item4">flex item 1</div>
+        <div class="flex-item4">flex item 2</div>
+    </div>
+    <p>设置元素换行以及换行之后的对齐方式</p>
+    <p>flex-warp和align-content</p>
+    <div class="flex-container5">
+        <div class="flex-item5">flex item 1</div>
+        <div class="flex-item5">flex item 2</div>
+        <div class="flex-item5">flex item 3</div>
+        <div class="flex-item5">flex item 4</div>
+    </div>
+
+    <p>设置元素所占比例flex</p>
+    <div class="flex-container6">
+        <div class="flex-item6-1">flex item 1</div>
+        <div class="flex-item6-2">flex item 2</div>
+        <div class="flex-item6-3">flex item 3</div>
+    </div>
+
+    <p>设置元素顺序order</p>
+    <div class="flex-container7">
+        <div class="flex-item7-1">flex item 1</div>
+        <div class="flex-item7-2">flex item 2</div>
+        <div class="flex-item7-3">flex item 3</div>
+    </div>
+
+</body>
+</html>

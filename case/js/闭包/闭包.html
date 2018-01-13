@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>闭包</title>
+</head>
+<body>
+    <script>
+        // 对于闭包的理解在于？
+        //定义在一个函数内部的函数，——一个函数有权利访问另一个函数作用域中的变量
+        function fn(num2){
+		var num = 15;	
+		function abc(){
+			num++;		
+			console.log(num+num2);
+		}		
+		return abc;		
+	}
+	var aa = fn(20);
+	aa();// 36   15+ 1 + 20
+	aa();// 37   16+ 1 +20
+	aa();// 38   17+1+20
+
+	fn(20)(); //36
+	fn(20)(); //36
+    </script>
+</body>
+</html>

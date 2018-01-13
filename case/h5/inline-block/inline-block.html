@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>行内块元素幽灵空白</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: white;
+        }
+
+        h1.one {
+            text-align: center;
+            padding: 10px;
+            background: red;
+        }
+
+        .box1 {
+            width: 100%;
+            background: red;
+        }
+
+        .box1 div {
+            display: inline-block;
+            height: 300px;
+            width: 40%;
+        }
+
+        .box1 .box1-a {
+            background: blue;
+            line-height: 30px;
+            vertical-align: 120%;
+        }
+
+        .box1 .box1-b {
+            background: pink;
+            line-height: 30px;
+            vertical-align: 36px;
+            /* = 30px * 120% */
+            /* vertical-align的百分比值不是相对于字体大小或者其他什么属性计算的，
+          而是相对于line-height计算的，看出他俩的满满基情
+          1. vertical-align是攻
+          2.line-height 是受*/
+        }
+
+        h1.two {
+            margin-top:20px; 
+            text-align: center;
+            padding: 10px;
+            background: skyblue;
+        }
+
+        .box2 {
+            padding-bottom:20px;
+            width: 100%;
+            background: skyblue;
+            overflow: hidden;
+        }
+
+        .box2 .box2-a {
+            float: left;
+            width: 40%;
+            background: red;
+        }
+
+        .box2 .box2-b {
+            float: right;
+            width: 40%;
+            background: green;
+            /* font-size: 0; */
+        }
+        /* 清除底部3像素：
+        1.让父盒子font-size为0
+        2.改变行内元素的vertical-align
+        3.在html中让行内元素写到一行（感觉很逗，这里也不演示） */
+        .box2 img {
+            width: 30%;
+
+        }
+        .box2 .box2-b img{
+            vertical-align: middle;  
+        }
+        
+
+        h1.three {
+            margin-top:20px; 
+            text-align: center;
+            padding: 10px;
+            background: yellow;
+        }
+
+        .box3 {
+            padding-bottom:20px;
+            width: 100%;
+            background: yellow;
+            overflow: hidden;
+        }
+        
+        .box3 .box3-a {
+            float: left;
+            width: 40%;
+            background: red;
+        }
+
+        .box3 .box3-b {
+            /* 给父盒子设置font-size：0 */
+            font-size:0; 
+            /* line-height: 0; */
+            float: right;
+            width: 40%;
+            background: green;
+        }
+        .box3 img {
+            width: 30%;
+        }
+        
+
+
+        h1.four {
+            margin-top:20px; 
+            text-align: center;
+            padding: 10px;
+            background: rgb(0, 195, 255);
+        }
+
+        .box4 {
+            padding-bottom:20px;
+            width: 100%;
+            background: rgb(0, 195, 255);
+            overflow: hidden;
+        }
+        .box4>div{
+            margin-bottom:20px; 
+        }
+        /* vertical-align默认值是baseline, 
+        也就是基线对齐。而基线是什么，基线就是文字的下边缘
+        所以，图片的下边缘就和后面后面诗句中文字的下边缘对齐 */   
+        .box4 .box4-a {
+            float: left;
+            width: 40%;
+            background: red;
+        }
+        .box4 .box4-b {
+            float: right;
+            width: 40%;
+            background: green;
+        }
+        .box4 .box4-b img{
+            display: block;
+        }
+        .box4 .box4-c {
+            float: left;
+            width: 40%;
+            background: red;
+        }
+        .box4 .box4-c img{
+            vertical-align: bottom;
+        }
+        .box4 .box4-d {
+            float: right;
+            width: 40%;
+            background: green;
+            line-height: 5px;
+        }
+        .box4 .box4-d span{
+            
+            /* line-height: 2px; */
+        }
+        .box4 .box4-e {
+            float: left;
+            width: 40%;
+            background: red;
+            font-size:0;
+        }
+        .box4 img {
+            /* vertical-align: middle; */
+            width: 30%;
+        }
+        .box4 span{
+          display: inline-block;
+          background: white;
+        }
+
+
+
+        h1.five {
+            margin-top:20px; 
+            text-align: center;
+            padding: 10px;
+            background: #ff4800;
+        }
+
+        .box5 {
+            padding-bottom:20px;
+            width: 100%;
+            background: #ff4800;
+            overflow: hidden;
+        }
+        
+        .box5 .box5-a {
+            line-height: 400px;
+            float: left;
+            width: 40%;
+            height: 400px;
+            background: #0004ff;
+        }
+
+        .box5 .box5-b {
+            line-height: 400px;
+            float: right;
+            width: 40%;
+            height: 400px;
+            font-size:0;
+            background: green;
+        }
+        .box5 img {
+            width: 30%;
+            height: 200px;
+            vertical-align: middle;
+        }
+        .box5 span{
+          display: inline-block;
+          background: white;
+        }
+        
+
+        h1.six {
+            margin-top:20px; 
+            text-align: center;
+            padding: 10px;
+            background: #00ff2a;
+        }
+
+        .box6 {
+            width: 100%;
+            background:#00ff2a;
+            text-align: justify;
+            line-height: 0;
+            /* font-size:0;            */
+            /* 1.当只设置line-height为0时，最终在底部还是留有几像素的空白，可以再给伪元素设置vertical-align:top/bottom/
+               2.或者直接设置font-size为0*/
+        }
+        .box6:after{
+            display: inline-block;
+            width: 100%;
+            content: "";
+            vertical-align: bottom;
+            vertical-align: top;
+            /* vertical-align: middle; */
+            /* middle不行 */
+        }
+        .box6 img {
+            width: 30%;
+            /* height: 200px; */
+            /* vertical-align: middle; */
+        }
+
+
+        
+        h1.special{
+            margin-top:20px;
+            font-size: 40px;
+            -webkit-text-fill-color: transparent;
+            background-image:  -webkit-linear-gradient(left,#129835,#ece648 25%,#129835 50%,#F9E92B 75%,rgb(40, 150, 38));
+            background-size: 200%,100%;
+            -webkit-background-clip: text;
+            -webkit-animation: word 5s linear infinite ;
+        }
+        @keyframes word {
+            0%{background-position: 0 0}
+            100%{background-position: -100% 0}
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="one">vertical-align和line-height的基友关系</h1>
+    <div class="box1">
+        <div class="box1-a">桃花屋里桃花庵，桃花庵下桃花仙</div>
+        <div class="box1-b">桃花仙人种桃树，又摘桃花卖酒钱</div>
+    </div>
+    <h1 class="two">inline-block基本现象：三像素留空白</h1>
+    <div class="box2">
+        <div class="box2-a">
+            <img src="./image/login1.jpg" alt="">
+        </div>
+        <div class="box2-b">
+            <img src="./image/login1.jpg" alt="">
+        </div>
+    </div>
+    <h1 class="three">inline-block水平方向存在间隙</h1>
+    <div class="box3">
+        <div class="box3-a">
+            <img src="./image/login1.jpg" alt="">
+            <img src="./image/login2.jpg" alt="">
+        </div>
+        <div class="box3-b">
+            <img src="./image/login1.jpg" alt="">
+             <img src="./image/login2.jpg" alt="">
+        </div>
+    </div>
+    <h1 class="four">inline-block中的幽灵空白</h1>
+    <div class="box4">
+        <div class="box4-a">
+            <img src="./image/login1.jpg" alt="">
+            <span>一笑倾城</span>
+        </div>
+        <div class="box4-b">
+            <img src="./image/login1.jpg" alt="">
+            <span>让vertical-align失效</span>
+            <!-- 让img变为block -->
+        </div>
+        <div class="box4-c">
+                <img src="./image/login1.jpg" alt="">
+                <span>其他vertical-align值</span>
+                <!-- 改变vertical-align值，就是告别基线 -->
+            </div>
+            <div class="box4-d">
+                <img src="./image/login1.jpg" alt="">
+                <span>直接修改line-height值</span>
+            </div>
+            <!-- 改变line-height值(或者改变font-size,设置fon这个是间接控制)      
+            -->
+            <div class="box4-e">
+                    <img src="./image/login1.jpg" alt="">
+                    <span>修改font-size值</span>
+            </div>
+             <!-- 改变font-size为0,设置fon这个是间接控制 line-height -->
+    </div>
+    <h1 class="five">inline-block真实意义的垂直居中</h1>
+    <div class="box5">
+        <div class="box5-a">
+            <img src="./image/login1.jpg" alt="">
+            <span>三山半落青天外，二水中分白鹭洲</span>
+            <!-- 并没有做到真实意义的垂直居中
+            1.文字已经垂直居中
+            2.图片却是没有相对于文字的中心点，因为幽灵空白存在-->
+        </div>
+        <div class="box5-b">
+            <img src="./image/login1.jpg" alt="">
+            <span>有情芍药含春泪，无力蔷薇卧晓枝</span>
+        </div>
+        <!-- 通过设置font-size为0 -->
+    </div>
+    <h1 class="six">inline-block在实现text-align对齐时</h1>
+    <div class="box6">
+        <img src="./image/login1.jpg" alt="">
+        <img src="./image/login1.jpg" alt="">
+        <img src="./image/login1.jpg" alt="">
+        <img src="./image/login1.jpg" alt="">
+        <img src="./image/login1.jpg" alt="">
+        <img src="./image/login1.jpg" alt="">
+        <!-- 莫名出现了一个空白 ，这里最后创建的伪元素有很大一部分原因-->
+       
+    </div>
+
+    <h1 class="special">The baseline of an ‘inline-block’ is the baseline of its last line box in the normal 
+            flow, unless it has either no in-flow line boxes or if its ‘overflow’ property has a computed value other than ‘visible’,
+             in which case the baseline is the bottom margin edge.<br>
+             翻译：一个inline-block元素，如果里面没有inline内联元素，或者overflow不是visible，则该元素的基线就是其margin底边缘，
+             否则，其基线就是元素里面最后一行内联元素的基线。
+    </h1>
+    <!-- <h1 class="six">inline-block真实意义的垂直居中</h1> -->
+</body>
+
+</html>
